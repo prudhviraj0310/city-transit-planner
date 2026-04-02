@@ -1,0 +1,642 @@
+@import "tailwindcss";
+
+@theme {
+  --color-midnight: #0a0e1a;
+  --color-deep-navy: #0d1321;
+  --color-slate-900: #0f172a;
+  --color-slate-800: #1e293b;
+  --color-slate-700: #334155;
+  --color-slate-600: #475569;
+  --color-slate-400: #94a3b8;
+  --color-slate-300: #cbd5e1;
+  --color-slate-200: #e2e8f0;
+  --color-slate-100: #f1f5f9;
+  --color-emerald-400: #34d399;
+  --color-emerald-500: #10b981;
+  --color-cyan-400: #22d3ee;
+  --color-cyan-500: #06b6d4;
+  --color-amber-400: #fbbf24;
+  --color-amber-500: #f59e0b;
+  --color-rose-400: #fb7185;
+  --color-rose-500: #f43f5e;
+  --color-indigo-400: #818cf8;
+  --color-indigo-500: #6366f1;
+  --color-violet-500: #8b5cf6;
+  --color-neon-green: #39ff14;
+  --color-neon-cyan: #00ffff;
+  --color-neon-pink: #ff073a;
+  --color-neon-magenta: #ff6ec7;
+  --color-neon-yellow: #faff00;
+  --color-electric-blue: #00f0ff;
+  
+  --font-sans: 'Inter', 'SF Pro Display', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--color-midnight);
+  color: var(--color-slate-100);
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* ═══════════ SCROLLBAR ═══════════ */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-deep-navy);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-slate-700);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-slate-600);
+}
+
+/* ═══════════ TEXT COLOR COMPONENT ANIMATIONS ═══════════ */
+.relative {
+  position: relative;
+}
+
+@keyframes gradient-foreground-1 {
+  from, 16.667%, to { opacity: 1; }
+  33.333%, 83.333% { opacity: 0; }
+}
+.animate-gradient-foreground-1 {
+  animation: gradient-foreground-1 8s infinite;
+}
+
+@keyframes gradient-foreground-2 {
+  from, to { opacity: 0; }
+  33.333%, 50% { opacity: 1; }
+  16.667%, 66.667% { opacity: 0; }
+}
+.animate-gradient-foreground-2 {
+  animation: gradient-foreground-2 8s infinite;
+}
+
+@keyframes gradient-foreground-3 {
+  from, 50%, to { opacity: 0; }
+  66.667%, 83.333% { opacity: 1; }
+}
+.animate-gradient-foreground-3 {
+  animation: gradient-foreground-3 8s infinite;
+}
+
+@keyframes gradient-background-1 {
+  from, 16.667%, to { opacity: 0; }
+  25%, 91.667% { opacity: 1; }
+}
+.before\:animate-gradient-background-1::before {
+  content: "";
+  animation: gradient-background-1 8s infinite;
+}
+
+@keyframes gradient-background-2 {
+  from, to { opacity: 1; }
+  33.333%, 50% { opacity: 0; }
+  25%, 58.333% { opacity: 1; }
+}
+.before\:animate-gradient-background-2::before {
+  content: "";
+  animation: gradient-background-2 8s infinite;
+}
+
+@keyframes gradient-background-3 {
+  from, 58.333%, 91.667%, to { opacity: 1; }
+  66.667%, 83.333% { opacity: 0; }
+}
+.before\:animate-gradient-background-3::before {
+  content: "";
+  animation: gradient-background-3 8s infinite;
+}
+
+
+.from-gradient-1-start {
+  --tw-gradient-from: #39ff14;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(57, 255, 20, 0));
+}
+.to-gradient-1-end {
+  --tw-gradient-to: #00ffff;
+}
+.from-gradient-2-start {
+  --tw-gradient-from: #ff073a;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(255, 7, 58, 0));
+}
+.to-gradient-2-end {
+  --tw-gradient-to: #ff6ec7;
+}
+.from-gradient-3-start {
+  --tw-gradient-from: #faff00;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(250, 255, 0, 0));
+}
+.to-gradient-3-end {
+  --tw-gradient-to: #00f0ff;
+}
+
+.before\:content-\[attr\(data-content\)\]::before {
+  content: attr(data-content);
+}
+
+/* ═══════════ GSAP CITYSCAPE STYLES ═══════════ */
+.city-scene {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background: linear-gradient(180deg, #070b14 0%, #0d1526 30%, #141e35 60%, #1a2744 100%);
+}
+
+.city-layer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
+/* Stars */
+.stars-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60%;
+}
+
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0;
+  animation: twinkle 3s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 1; }
+}
+
+/* Buildings */
+.building {
+  position: absolute;
+  bottom: 0;
+  border-radius: 2px 2px 0 0;
+}
+
+.building-window {
+  position: absolute;
+  width: 6px;
+  height: 8px;
+  border-radius: 1px;
+}
+
+/* Road */
+.road {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 80px;
+  background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
+  z-index: 10;
+}
+
+.road-line {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 3px;
+  width: 40px;
+  background: #fbbf24;
+  border-radius: 2px;
+  opacity: 0.6;
+}
+
+.sidewalk {
+  position: absolute;
+  bottom: 80px;
+  left: 0;
+  width: 100%;
+  height: 20px;
+  background: linear-gradient(180deg, #2d3748 0%, #1a2332 100%);
+  z-index: 9;
+}
+
+/* Vehicles */
+.vehicle {
+  position: absolute;
+  bottom: 85px;
+  z-index: 15;
+}
+
+.car-body {
+  position: relative;
+}
+
+.tree {
+  position: absolute;
+  bottom: 100px;
+  z-index: 8;
+}
+
+.tree-trunk {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  background: #5d4037;
+  border-radius: 2px;
+}
+
+.tree-crown {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+}
+
+.person {
+  position: absolute;
+  bottom: 100px;
+  z-index: 12;
+}
+
+/* Traffic light */
+.traffic-light {
+  position: absolute;
+  bottom: 100px;
+  z-index: 11;
+}
+
+/* ═══════════ GLASS MORPHISM ═══════════ */
+.glass {
+  background: #2d3a4f;
+  border: 2px solid #475569;
+  border-radius: 20px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+}
+
+.glass-light {
+  background: #2d3a4f;
+  border: 1px solid #475569;
+}
+
+/* ═══════════ ROUTE CARDS ═══════════ */
+.route-card {
+  background: #2d3a4f;
+  backdrop-filter: blur(16px);
+  border: 2px solid #475569;
+  border-radius: 16px;
+  padding: 24px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+}
+
+.route-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent-color, #6366f1), transparent);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.route-card:hover {
+  border-color: rgba(255, 255, 255, 0.12);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 60px -15px rgba(0, 0, 0, 0.5);
+}
+
+.route-card:hover::before {
+  opacity: 1;
+}
+
+.route-card.fastest {
+  --accent-color: #10b981;
+  border-color: rgba(16, 185, 129, 0.3);
+}
+
+.route-card.cheapest {
+  --accent-color: #f59e0b;
+  border-color: rgba(245, 158, 11, 0.3);
+}
+
+.route-card.eco {
+  --accent-color: #06b6d4;
+  border-color: rgba(6, 182, 212, 0.3);
+}
+
+/* Badge */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.025em;
+  text-transform: uppercase;
+}
+
+.badge-fastest {
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.badge-cheapest {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.badge-eco {
+  background: rgba(6, 182, 212, 0.15);
+  color: #22d3ee;
+  border: 1px solid rgba(6, 182, 212, 0.3);
+}
+
+/* ═══════════ INPUT STYLES ═══════════ */
+.transit-input {
+  width: 100%;
+  padding: 14px 20px 14px 48px;
+  background: #1e293b;
+  border: 2px solid #475569;
+  border-radius: 12px;
+  color: #f1f5f9;
+  font-size: 1rem;
+  font-family: var(--font-sans);
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.transit-input:focus {
+  border-color: rgba(99, 102, 241, 0.5);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15), 0 0 20px rgba(99, 102, 241, 0.1);
+}
+
+.transit-input::placeholder {
+  color: #cbd5e1;
+}
+
+/* ═══════════ TRANSPORT MODE PILLS ═══════════ */
+.mode-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 12px;
+  border: 2px solid #475569;
+  background: #1e293b;
+  color: #e2e8f0;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  user-select: none;
+}
+
+.mode-pill:hover {
+  background: rgba(99, 102, 241, 0.1);
+  border-color: rgba(99, 102, 241, 0.3);
+  color: #c7d2fe;
+}
+
+.mode-pill.active {
+  background: rgba(99, 102, 241, 0.25);
+  border-color: rgba(99, 102, 241, 0.5);
+  color: #c7d2fe;
+  box-shadow: 0 0 20px rgba(99, 102, 241, 0.25);
+}
+
+/* ═══════════ PLAN ROUTE BUTTON ═══════════ */
+.btn-plan {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 16px 32px;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  border: none;
+  border-radius: 14px;
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: var(--font-sans);
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-plan::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #818cf8 0%, #a78bfa 100%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.btn-plan:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 40px -10px rgba(99, 102, 241, 0.5);
+}
+
+.btn-plan:hover::before {
+  opacity: 1;
+}
+
+.btn-plan:active {
+  transform: translateY(0);
+}
+
+.btn-plan span {
+  position: relative;
+  z-index: 1;
+}
+
+/* ═══════════ SECTION TRANSITIONS ═══════════ */
+.section-reveal {
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+/* ═══════════ CONGESTION BAR ═══════════ */
+.congestion-bar {
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+  position: relative;
+}
+
+.congestion-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 1s ease;
+}
+
+.congestion-low { background: linear-gradient(90deg, #10b981, #34d399); }
+.congestion-medium { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+.congestion-high { background: linear-gradient(90deg, #ef4444, #f87171); }
+
+/* ═══════════ AUTOCOMPLETE DROPDOWN ═══════════ */
+.autocomplete-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: 4px;
+  background: #1e293b;
+  backdrop-filter: blur(20px);
+  border: 2px solid #475569;
+  border-radius: 12px;
+  overflow: hidden;
+  z-index: 50;
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.autocomplete-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.autocomplete-item:last-child {
+  border-bottom: none;
+}
+
+.autocomplete-item:hover {
+  background: rgba(99, 102, 241, 0.1);
+}
+
+/* ═══════════ HISTORY PANEL ═══════════ */
+.history-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.history-item:hover {
+  background: rgba(99, 102, 241, 0.08);
+  border-color: rgba(99, 102, 241, 0.2);
+}
+
+/* ═══════════ CARBON FOOTPRINT ═══════════ */
+.carbon-meter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.carbon-leaf {
+  transition: color 0.3s ease;
+}
+
+/* ═══════════ SCROLL CTA ═══════════ */
+.scroll-cta {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-10px); }
+}
+
+/* ═══════════ PULSE GLOW ═══════════ */
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 5px rgba(99, 102, 241, 0.3); }
+  50% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.6), 0 0 40px rgba(99, 102, 241, 0.2); }
+}
+
+.pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* ═══════════ LOADING SKELETON ═══════════ */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, 
+    rgba(255,255,255,0.04) 25%, 
+    rgba(255,255,255,0.08) 50%, 
+    rgba(255,255,255,0.04) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+  border-radius: 8px;
+}
+
+/* ═══════════ RESPONSIVE ═══════════ */
+@media (max-width: 768px) {
+  .city-scene {
+    height: 70vh;
+  }
+  
+  .route-card {
+    padding: 16px;
+  }
+}
