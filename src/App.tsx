@@ -9,9 +9,21 @@ export default function App() {
 
   function handleEnterPlanner() {
     setShowPlanner(true);
-    setTimeout(() => {
+    
+    // Cinematic transition - fully disable city
+    gsap.to('.city-scene', {
+      opacity: 0,
+      scale: 0.95,
+      duration: 0.8,
+      ease: 'power3.inOut',
+      onComplete: () => {
+        gsap.set('.city-scene', { display: 'none' });
+      }
+    });
+
+    requestAnimationFrame(() => {
       plannerSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }, 100);
+    });
   }
 
   // Animate feature cards on mount
@@ -30,8 +42,11 @@ export default function App() {
       {showPlanner && (
         <>
           <div ref={plannerSectionRef} style={{
+            position: 'relative',
+            zIndex: 100,
             background: '#111827',
             minHeight: '100vh',
+            boxShadow: '0 -20px 40px rgba(0,0,0,0.5)', // Nice shadow over the city
           }}>
             <RoutePlanner />
           </div>
