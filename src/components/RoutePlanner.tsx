@@ -110,7 +110,7 @@ export default function RoutePlanner() {
         <h2 style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 800, color: '#fff', marginBottom: 12, textShadow: '0 2px 20px rgba(99,102,241,0.5)' }}>
           🚀 Plan Your Journey
         </h2>
-        <p style={{ color: '#e2e8f0', fontSize: '1.1rem', textShadow: '0 1px 10px rgba(0,0,0,0.5)' }}>Compare routes across metro, bus, auto, bike & walking</p>
+        <p style={{ color: '#e2e8f0', fontSize: '1.1rem', textShadow: '0 1px 10px rgba(0,0,0,0.5)' }}>Compare routes across Indian cities — metro, bus, auto, bike & walking</p>
       </div>
 
       {/* ═══ LIGHT CARD FORM ═══ */}
@@ -125,7 +125,7 @@ export default function RoutePlanner() {
         <div style={{ position: 'relative', marginBottom: 16 }}>
           <label style={{ display: 'block', color: '#1e293b', fontSize: '0.85rem', fontWeight: 600, marginBottom: 6 }}>From</label>
           <MapPin size={18} style={{ position: 'absolute', left: 14, bottom: 14, color: '#10b981', zIndex: 2 }} />
-          <input id="input-from" placeholder="Search starting location..."
+          <input id="input-from" placeholder="Search city (e.g. Hyderabad, Chennai)..."
             value={fromSearch}
             onChange={e => { setFromSearch(e.target.value); setShowFromDrop(true); setFromId(''); }}
             onFocus={() => setShowFromDrop(true)}
@@ -174,7 +174,7 @@ export default function RoutePlanner() {
         <div style={{ position: 'relative', marginBottom: 24 }}>
           <label style={{ display: 'block', color: '#1e293b', fontSize: '0.85rem', fontWeight: 600, marginBottom: 6 }}>To</label>
           <Navigation size={18} style={{ position: 'absolute', left: 14, bottom: 14, color: '#f43f5e', zIndex: 2 }} />
-          <input id="input-to" placeholder="Search destination..."
+          <input id="input-to" placeholder="Search destination city..."
             value={toSearch}
             onChange={e => { setToSearch(e.target.value); setShowToDrop(true); setToId(''); }}
             onFocus={() => setShowToDrop(true)}

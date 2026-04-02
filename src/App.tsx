@@ -1,14 +1,12 @@
-import { useState, useRef, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 import gsap from 'gsap';
 import Cityscape from '@/components/Cityscape';
 import RoutePlanner from '@/components/RoutePlanner';
 
 export default function App() {
-  const [showPlanner, setShowPlanner] = useState(false);
   const plannerSectionRef = useRef<HTMLDivElement>(null);
 
   function handleEnterPlanner() {
-    setShowPlanner(true);
     setTimeout(() => {
       plannerSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, 100);
@@ -16,10 +14,9 @@ export default function App() {
 
   // Animate feature cards on mount
   useEffect(() => {
-    if (!showPlanner) return;
     const cards = document.querySelectorAll('.feature-card');
     gsap.from(cards, { y: 40, opacity: 0, duration: 0.6, stagger: 0.1, ease: 'power3.out', delay: 0.3 });
-  }, [showPlanner]);
+  }, []);
 
   return (
     <div style={{ minHeight: '100vh' }}>
@@ -27,14 +24,12 @@ export default function App() {
       <Cityscape onEnter={handleEnterPlanner} />
 
       {/* ═══ ROUTE PLANNER ═══ */}
-      {showPlanner && (
-        <>
-          <div ref={plannerSectionRef} style={{
-            background: '#111827',
-            minHeight: '100vh',
-          }}>
-            <RoutePlanner />
-          </div>
+      <div ref={plannerSectionRef} style={{
+        background: '#111827',
+        minHeight: '100vh',
+      }}>
+        <RoutePlanner />
+      </div>
 
           {/* ═══ FEATURES SECTION ═══ */}
           <div style={{
@@ -122,8 +117,6 @@ export default function App() {
               </p>
             </div>
           </div>
-        </>
-      )}
     </div>
   );
 }
