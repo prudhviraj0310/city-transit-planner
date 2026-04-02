@@ -106,187 +106,155 @@ export default function RoutePlanner() {
   return (
     <div ref={plannerRef} style={{ maxWidth: 900, margin: '0 auto', padding: '60px 20px 100px' }}>
       {/* ═══ HEADER ═══ */}
-      <div style={{ textAlign: 'center', marginBottom: 48 }}>
-        <h2 style={{
-          fontSize: 'clamp(2rem, 5vw, 3.2rem)', fontWeight: 800,
-          color: '#ffffff',
-          marginBottom: 16,
-          textShadow: '0 0 40px rgba(99,102,241,0.4)',
-        }}>
+      <div style={{ textAlign: 'center', marginBottom: 40 }}>
+        <h2 style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 800, color: '#fff', marginBottom: 12, textShadow: '0 2px 20px rgba(99,102,241,0.5)' }}>
           🚀 Plan Your Journey
         </h2>
-        <p style={{ color: '#e2e8f0', fontSize: '1.1rem', fontWeight: 400 }}>
-          Compare routes across metro, bus, auto, bike & walking
-        </p>
+        <p style={{ color: '#e2e8f0', fontSize: '1.1rem', textShadow: '0 1px 10px rgba(0,0,0,0.5)' }}>Compare routes across metro, bus, auto, bike & walking</p>
       </div>
 
-      {/* ═══ INPUT SECTION ═══ */}
+      {/* ═══ LIGHT CARD FORM ═══ */}
       <div style={{
-        borderRadius: 20, padding: '32px 28px', marginBottom: 24,
-        background: '#3b4a63',
-        border: '2px solid #818cf8',
-        boxShadow: '0 0 30px rgba(99,102,241,0.3), 0 12px 40px rgba(0,0,0,0.5)',
+        borderRadius: 20, padding: '36px 32px', marginBottom: 24,
+        background: '#ffffff',
+        backgroundImage: 'radial-gradient(#e2e8f0 1px, transparent 1px)',
+        backgroundSize: '20px 20px',
+        boxShadow: '0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.1)',
       }}>
-        {/* From / To inputs */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 16, marginBottom: 24 }}>
-          {/* FROM */}
-          <div style={{ position: 'relative' }}>
-            <MapPin size={18} style={{ position: 'absolute', left: 16, top: '50%', transform: 'translateY(-50%)', color: '#34d399', zIndex: 2 }} />
-            <input
-              id="input-from"
-              placeholder="Where are you starting from?"
-              value={fromSearch}
-              onChange={e => { setFromSearch(e.target.value); setShowFromDrop(true); setFromId(''); }}
-              onFocus={() => setShowFromDrop(true)}
-              onBlur={() => setTimeout(() => setShowFromDrop(false), 200)}
-              style={{
-                width: '100%', padding: '16px 20px 16px 48px',
-                background: '#1e293b', border: '2px solid #64748b', borderRadius: 12,
-                color: '#f1f5f9', fontSize: '1rem', fontFamily: 'inherit', outline: 'none',
-              }}
-            />
-            {showFromDrop && fromSearch && fromSuggestions.length > 0 && (
-              <div style={{
-                position: 'absolute', top: '100%', left: 0, right: 0, marginTop: 4,
-                background: '#1e293b', border: '2px solid #64748b', borderRadius: 12,
-                overflow: 'hidden', zIndex: 50, maxHeight: 240, overflowY: 'auto',
-              }}>
-                {fromSuggestions.map(loc => (
-                  <div key={loc.id} style={{
-                    display: 'flex', alignItems: 'center', gap: 12, padding: '14px 16px',
-                    cursor: 'pointer', borderBottom: '1px solid #334155',
-                  }} onMouseDown={() => {
-                    setFromId(loc.id); setFromSearch(loc.name); setShowFromDrop(false);
-                  }}
-                  onMouseEnter={e => (e.currentTarget.style.background = '#334155')}
-                  onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
-                  >
-                    <MapPin size={14} style={{ color: '#34d399' }} />
-                    <div>
-                      <div style={{ color: '#f1f5f9', fontSize: '0.9rem', fontWeight: 500 }}>{loc.name}</div>
-                      <div style={{ color: '#94a3b8', fontSize: '0.75rem' }}>Zone {loc.zone} • {loc.type.replace('_', ' ')}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* SWAP BUTTON */}
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <button onClick={swapLocations} style={{
-              width: 44, height: 44, borderRadius: '50%', border: '2px solid #64748b',
-              background: '#334155', color: '#a5b4fc', cursor: 'pointer',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              transition: 'all 0.3s ease', fontSize: '1.2rem',
+        {/* FROM */}
+        <div style={{ position: 'relative', marginBottom: 16 }}>
+          <label style={{ display: 'block', color: '#1e293b', fontSize: '0.85rem', fontWeight: 600, marginBottom: 6 }}>From</label>
+          <MapPin size={18} style={{ position: 'absolute', left: 14, bottom: 14, color: '#10b981', zIndex: 2 }} />
+          <input id="input-from" placeholder="Search starting location..."
+            value={fromSearch}
+            onChange={e => { setFromSearch(e.target.value); setShowFromDrop(true); setFromId(''); }}
+            onFocus={() => setShowFromDrop(true)}
+            onBlur={() => setTimeout(() => setShowFromDrop(false), 200)}
+            style={{
+              width: '100%', padding: '14px 16px 14px 44px',
+              background: '#f1f5f9', border: '2px solid #cbd5e1', borderRadius: 12,
+              color: '#0f172a', fontSize: '1rem', fontFamily: 'inherit', outline: 'none',
             }}
-              onMouseEnter={e => { (e.currentTarget).style.background = '#475569'; }}
-              onMouseLeave={e => { (e.currentTarget).style.background = '#334155'; }}
-            >
-              ⇅
-            </button>
-          </div>
-
-          {/* TO */}
-          <div style={{ position: 'relative' }}>
-            <Navigation size={18} style={{ position: 'absolute', left: 16, top: '50%', transform: 'translateY(-50%)', color: '#fb7185', zIndex: 2 }} />
-            <input
-              id="input-to"
-              placeholder="Where do you want to go?"
-              value={toSearch}
-              onChange={e => { setToSearch(e.target.value); setShowToDrop(true); setToId(''); }}
-              onFocus={() => setShowToDrop(true)}
-              onBlur={() => setTimeout(() => setShowToDrop(false), 200)}
-              style={{
-                width: '100%', padding: '16px 20px 16px 48px',
-                background: '#1e293b', border: '2px solid #64748b', borderRadius: 12,
-                color: '#f1f5f9', fontSize: '1rem', fontFamily: 'inherit', outline: 'none',
-              }}
-            />
-            {showToDrop && toSearch && toSuggestions.length > 0 && (
-              <div style={{
-                position: 'absolute', top: '100%', left: 0, right: 0, marginTop: 4,
-                background: '#1e293b', border: '2px solid #64748b', borderRadius: 12,
-                overflow: 'hidden', zIndex: 50, maxHeight: 240, overflowY: 'auto',
-              }}>
-                {toSuggestions.map(loc => (
-                  <div key={loc.id} style={{
-                    display: 'flex', alignItems: 'center', gap: 12, padding: '14px 16px',
-                    cursor: 'pointer', borderBottom: '1px solid #334155',
-                  }} onMouseDown={() => {
-                    setToId(loc.id); setToSearch(loc.name); setShowToDrop(false);
-                  }}
-                  onMouseEnter={e => (e.currentTarget.style.background = '#334155')}
-                  onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
-                  >
-                    <Navigation size={14} style={{ color: '#fb7185' }} />
-                    <div>
-                      <div style={{ color: '#f1f5f9', fontSize: '0.9rem', fontWeight: 500 }}>{loc.name}</div>
-                      <div style={{ color: '#94a3b8', fontSize: '0.75rem' }}>Zone {loc.zone} • {loc.type.replace('_', ' ')}</div>
-                    </div>
+          />
+          {showFromDrop && fromSearch && fromSuggestions.length > 0 && (
+            <div style={{
+              position: 'absolute', top: '100%', left: 0, right: 0, marginTop: 4,
+              background: '#fff', border: '2px solid #cbd5e1', borderRadius: 12,
+              overflow: 'hidden', zIndex: 50, maxHeight: 240, overflowY: 'auto',
+              boxShadow: '0 8px 24px rgba(0,0,0,0.15)',
+            }}>
+              {fromSuggestions.map(loc => (
+                <div key={loc.id} style={{
+                  display: 'flex', alignItems: 'center', gap: 12, padding: '12px 16px',
+                  cursor: 'pointer', borderBottom: '1px solid #e2e8f0',
+                }} onMouseDown={() => { setFromId(loc.id); setFromSearch(loc.name); setShowFromDrop(false); }}
+                onMouseEnter={e => (e.currentTarget.style.background = '#f1f5f9')}
+                onMouseLeave={e => (e.currentTarget.style.background = '#fff')}>
+                  <MapPin size={14} style={{ color: '#10b981' }} />
+                  <div>
+                    <div style={{ color: '#0f172a', fontSize: '0.9rem', fontWeight: 500 }}>{loc.name}</div>
+                    <div style={{ color: '#64748b', fontSize: '0.75rem' }}>Zone {loc.zone} • {loc.type.replace('_', ' ')}</div>
                   </div>
-                ))}
-              </div>
-            )}
-          </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
-        {/* PREFERENCE PILLS */}
+        {/* SWAP */}
+        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 16 }}>
+          <button onClick={swapLocations} style={{
+            width: 40, height: 40, borderRadius: '50%', border: '2px solid #cbd5e1',
+            background: '#f1f5f9', color: '#6366f1', cursor: 'pointer',
+            display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.1rem',
+          }}>⇅</button>
+        </div>
+
+        {/* TO */}
+        <div style={{ position: 'relative', marginBottom: 24 }}>
+          <label style={{ display: 'block', color: '#1e293b', fontSize: '0.85rem', fontWeight: 600, marginBottom: 6 }}>To</label>
+          <Navigation size={18} style={{ position: 'absolute', left: 14, bottom: 14, color: '#f43f5e', zIndex: 2 }} />
+          <input id="input-to" placeholder="Search destination..."
+            value={toSearch}
+            onChange={e => { setToSearch(e.target.value); setShowToDrop(true); setToId(''); }}
+            onFocus={() => setShowToDrop(true)}
+            onBlur={() => setTimeout(() => setShowToDrop(false), 200)}
+            style={{
+              width: '100%', padding: '14px 16px 14px 44px',
+              background: '#f1f5f9', border: '2px solid #cbd5e1', borderRadius: 12,
+              color: '#0f172a', fontSize: '1rem', fontFamily: 'inherit', outline: 'none',
+            }}
+          />
+          {showToDrop && toSearch && toSuggestions.length > 0 && (
+            <div style={{
+              position: 'absolute', top: '100%', left: 0, right: 0, marginTop: 4,
+              background: '#fff', border: '2px solid #cbd5e1', borderRadius: 12,
+              overflow: 'hidden', zIndex: 50, maxHeight: 240, overflowY: 'auto',
+              boxShadow: '0 8px 24px rgba(0,0,0,0.15)',
+            }}>
+              {toSuggestions.map(loc => (
+                <div key={loc.id} style={{
+                  display: 'flex', alignItems: 'center', gap: 12, padding: '12px 16px',
+                  cursor: 'pointer', borderBottom: '1px solid #e2e8f0',
+                }} onMouseDown={() => { setToId(loc.id); setToSearch(loc.name); setShowToDrop(false); }}
+                onMouseEnter={e => (e.currentTarget.style.background = '#f1f5f9')}
+                onMouseLeave={e => (e.currentTarget.style.background = '#fff')}>
+                  <Navigation size={14} style={{ color: '#f43f5e' }} />
+                  <div>
+                    <div style={{ color: '#0f172a', fontSize: '0.9rem', fontWeight: 500 }}>{loc.name}</div>
+                    <div style={{ color: '#64748b', fontSize: '0.75rem' }}>Zone {loc.zone} • {loc.type.replace('_', ' ')}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* PREFERENCES */}
         <div style={{ marginBottom: 20 }}>
-          <div style={{ color: '#e2e8f0', fontSize: '0.8rem', marginBottom: 10, textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 600 }}>
+          <div style={{ color: '#334155', fontSize: '0.85rem', fontWeight: 700, marginBottom: 10, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
             AI Preference
           </div>
           <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
             {prefOptions.map(p => (
-              <button key={p.id}
-                onClick={() => setPreference(p.id)}
-                style={{
-                  display: 'flex', alignItems: 'center', gap: 8,
-                  padding: '10px 20px', borderRadius: 12, cursor: 'pointer',
-                  border: preference === p.id ? '2px solid #818cf8' : '2px solid #64748b',
-                  background: preference === p.id ? '#4338ca' : '#1e293b',
-                  color: preference === p.id ? '#e0e7ff' : '#e2e8f0',
-                  fontSize: '0.875rem', fontWeight: 500, fontFamily: 'inherit',
-                  transition: 'all 0.3s ease',
-                }}
-              >
-                {p.icon} {p.label}
-              </button>
+              <button key={p.id} onClick={() => setPreference(p.id)} style={{
+                display: 'flex', alignItems: 'center', gap: 8,
+                padding: '10px 20px', borderRadius: 12, cursor: 'pointer',
+                border: preference === p.id ? '2px solid #6366f1' : '2px solid #cbd5e1',
+                background: preference === p.id ? '#6366f1' : '#fff',
+                color: preference === p.id ? '#fff' : '#334155',
+                fontSize: '0.875rem', fontWeight: 600, fontFamily: 'inherit',
+              }}>{p.icon} {p.label}</button>
             ))}
           </div>
         </div>
 
         {/* TOGGLES */}
         <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap', marginBottom: 24 }}>
-          <label style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#e2e8f0', fontSize: '0.9rem', cursor: 'pointer' }}>
+          <label style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#334155', fontSize: '0.9rem', fontWeight: 500, cursor: 'pointer' }}>
             <input type="checkbox" checked={peakMode} onChange={e => setPeakMode(e.target.checked)}
-              style={{ accentColor: '#818cf8', width: 18, height: 18 }} />
+              style={{ accentColor: '#6366f1', width: 18, height: 18 }} />
             <TrendingUp size={15} /> Peak Hour Mode
           </label>
-          <label style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#e2e8f0', fontSize: '0.9rem', cursor: 'pointer' }}>
+          <label style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#334155', fontSize: '0.9rem', fontWeight: 500, cursor: 'pointer' }}>
             <input type="checkbox" checked={accessibleOnly} onChange={e => setAccessibleOnly(e.target.checked)}
-              style={{ accentColor: '#818cf8', width: 18, height: 18 }} />
+              style={{ accentColor: '#6366f1', width: 18, height: 18 }} />
             <Accessibility size={15} /> Wheelchair Accessible
           </label>
         </div>
 
-        {/* PLAN BUTTON */}
+        {/* BUTTON */}
         <button id="btn-plan-route" onClick={() => {
-          if (!fromId || !toId) {
-            alert('Please select both a starting point and destination from the dropdown suggestions.');
-            return;
-          }
+          if (!fromId || !toId) { alert('Please select both locations from the dropdown suggestions.'); return; }
           handlePlanRoute();
-        }}
-          style={{
-            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
-            width: '100%', padding: '16px 32px',
-            background: fromId && toId ? 'linear-gradient(135deg, #6366f1, #8b5cf6)' : '#475569',
-            border: 'none', borderRadius: 14, color: 'white',
-            fontSize: '1.05rem', fontWeight: 600, fontFamily: 'inherit',
-            cursor: 'pointer', transition: 'all 0.3s ease',
-          }}>
-          {fromId && toId ? '🗺️ Find Routes' : '📍 Select locations above first'}
+        }} style={{
+          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
+          width: '100%', padding: '16px 32px',
+          background: fromId && toId ? '#6366f1' : '#94a3b8',
+          border: 'none', borderRadius: 14, color: '#fff',
+          fontSize: '1.1rem', fontWeight: 700, fontFamily: 'inherit', cursor: 'pointer',
+        }}>
+          {fromId && toId ? '🗺️ Find Routes' : '📍 Type & select locations above'}
         </button>
       </div>
 
